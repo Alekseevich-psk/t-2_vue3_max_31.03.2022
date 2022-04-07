@@ -11,7 +11,7 @@
                 <input v-model="post.body" type="text" class="form-control" id="formGroupExampleInput2" />
             </div>
             <div class="post__align pt-4">
-                <button type="button" @click="log" class="btn btn-primary">Добавить пост</button>
+                <button type="button" @click="addPost" class="btn btn-primary">Добавить пост</button>
             </div>
         </form>
     </div>
@@ -28,19 +28,10 @@ export default {
         };
     },
     methods: {
-        log: function () {
-            console.log(this.post.title);
-        },
         addPost: function () {
-            const newPost = {
-                id: this.posts.length + 1,
-                title: this.title,
-                body: this.body,
-            };
-
-            this.posts.push(newPost);
-            this.title = "";
-            this.body = "";
+            this.$emit('create', this.post)
+            this.title = "",
+            this.body = ""
         },
     },
 };

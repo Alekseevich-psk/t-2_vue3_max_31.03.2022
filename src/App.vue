@@ -1,6 +1,6 @@
 <template>
     <div class="post">
-        <post-form></post-form>
+        <post-form @create="createPost"></post-form>
         <post-list  :posts="posts"></post-list>
     </div>
 
@@ -10,7 +10,6 @@
 
 import PostList from "@/components/PostList.vue";
 import PostForm from "@/components/PostForm.vue";
-// import PostList from "./components/PostList.vue";
 
 export default {
   components: { PostList, PostForm },
@@ -23,27 +22,13 @@ export default {
             ],
             title: "",
             body: "",
-            isActive: false,
         };
-    }, 
-    created: function() {
-        this.posts.reverse();
     },
     methods: {
-        countLike: function () {
-            return (this.likes += 1);
-        },
-
-        addPost: function () {
-
-        },
-
-        reversePost: function() {
-            this.posts.reverse();
-            this.isActive = !this.isActive;
+        createPost(post) {
+            this.posts.push(post);
         }
-
-    },
+    }
 };
 </script>
 
