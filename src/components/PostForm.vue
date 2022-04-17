@@ -22,16 +22,26 @@ export default {
     data() {
         return {
             post: {
+                id: "",
                 title: "",
                 body: "",
             },
         };
     },
+    props: {
+        posts: {
+            type: Array,
+            required: true,
+        },
+    },
+    mounted() {
+        // console.log(this.posts.length);
+    },
     methods: {
         addPost: function () {
-            this.$emit('create', this.post)
-            this.title = "",
-            this.body = ""
+            this.post.id = this.posts.length + 1;
+            this.$emit("create", this.post);
+            (this.title = ""), (this.body = ""), (this.id = "");
         },
     },
 };

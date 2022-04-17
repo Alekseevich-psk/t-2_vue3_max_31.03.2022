@@ -2,14 +2,22 @@
     <div class="post__item p-3 mb-2 d-flex justify-content-between align-items-center">
         <div class="post__wrap-text">
             <p class="post__title mb-0">
+                id: <span>{{ post.id }}</span>
+            </p>
+            <p class="post__title mb-0">
                 Название: <span>{{ post.title }}</span>
             </p>
             <p class="post__desc mb-0">
                 Опсиание: <span>{{ post.body }}</span>
             </p>
         </div>
-        <div class="post__wrap-btn">
-            <a href="{{ post.link }}" class="btn btn-primary">Посмотреть</a>
+        <div class="post__wrap-btn d-flex justify-content-between">
+            <div class="post__wrap-btn m-1">
+                <a href="{{ post.link }}" class="btn btn-primary">Посмотреть</a>
+            </div>
+            <div class="post__wrap-btn m-1">
+                <button @click="removePost" class="btn btn-danger">Удалить</button>
+            </div>
         </div>
     </div>
 </template>
@@ -19,10 +27,15 @@ export default {
     props: {
         post: {
             type: Object,
-            requered: true
+            requered: true,
+        },
+    },
+    methods: {
+        removePost: function() {
+            console.log(this.post.id);
+            this.$emit("remove", this.post.id);
         }
     },
-    methods: {},
 };
 </script>
 
@@ -31,4 +44,5 @@ export default {
 .post__add {
     border: 1px solid rgb(209, 209, 209);
     border-radius: 8px;
-}</style>
+}
+</style>
