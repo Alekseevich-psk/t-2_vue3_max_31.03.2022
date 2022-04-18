@@ -1,16 +1,17 @@
 <template>
     <div class="post">
         <post-form @create="createPost" :posts="posts"></post-form>
-        <post-list @remove="removePost" :posts="posts"></post-list>
+        <post-list @removePost="removePost" :posts="posts"></post-list>
     </div>
 </template>
 
 <script>
 import PostList from "@/components/PostList.vue";
 import PostForm from "@/components/PostForm.vue";
+import PostItem from "@/components/PostItem.vue";
 
 export default {
-    components: { PostList, PostForm },
+    components: { PostList, PostForm, PostItem },
     data() {
         return {
             posts: [
@@ -21,6 +22,9 @@ export default {
             title: "",
             body: "",
         };
+    },
+    mounted() {
+
     },
     methods: {
         createPost(post) {

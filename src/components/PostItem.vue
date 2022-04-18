@@ -12,12 +12,8 @@
             </p>
         </div>
         <div class="post__wrap-btn d-flex justify-content-between">
-            <div class="post__wrap-btn m-1">
-                <a href="{{ post.link }}" class="btn btn-primary">Посмотреть</a>
-            </div>
-            <div class="post__wrap-btn m-1">
-                <button @click="removePost" class="btn btn-danger">Удалить</button>
-            </div>
+            <button-show />
+            <button-remove />
         </div>
     </div>
 </template>
@@ -29,13 +25,7 @@ export default {
             type: Object,
             requered: true,
         },
-    },
-    methods: {
-        removePost: function() {
-            console.log(this.post.id);
-            this.$emit("remove", this.post.id);
-        }
-    },
+    }
 };
 </script>
 
