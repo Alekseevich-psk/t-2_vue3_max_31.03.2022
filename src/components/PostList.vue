@@ -1,14 +1,7 @@
 <template>
     <div>
         <div class="post__align mb-3 text-end">
-            <button
-                type="button"
-                @click="reversePost"
-                v-bind:class="{ 'btn-success': isActive, 'btn-outline-secondary': !isActive }"
-                class="btn"
-            >
-                Сортировать
-            </button>
+            <!-- <button-reverse post="this.posts"/> -->
         </div>
         <post-item v-for="post in posts" :key="post.id" :post="post" />
     </div>
@@ -16,9 +9,10 @@
 
 <script>
 import PostItem from "./PostItem.vue";
+import ButtonReverse from "./UI/ButtonReverse.vue";
 
 export default {
-    components: { PostItem },
+    components: { PostItem, ButtonReverse },
     data() {
         return {
             isActive: false,
@@ -33,12 +27,7 @@ export default {
     created: function () {
         this.posts.reverse();
     },
-    methods: {
-        reversePost: function () {
-            this.posts.reverse();
-            this.isActive = !this.isActive;
-        },
-    },
+    methods: {},
 };
 </script>
 

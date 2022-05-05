@@ -7,9 +7,19 @@
 <script>
 export default {
     name: 'button-remove',
+    props: {
+        id: {
+            type: Number,
+            required: true,
+        },
+    },
+    mounted() {
+        // console.log(this.id);
+    },
     methods: {
         removePost() {
-            console.log(this.$parent);
+            // console.log(this.id);
+            this.$emit("removePost", this.id);
         },
     },
 };

@@ -1,6 +1,6 @@
 <template>
     <div class="post">
-        <post-form @create="createPost" :posts="posts"></post-form>
+        <post-form @create="createPost" :postsCount="this.posts.length"></post-form>
         <post-list @removePost="removePost" :posts="posts"></post-list>
     </div>
 </template>
@@ -23,18 +23,14 @@ export default {
             body: "",
         };
     },
-    mounted() {
-
-    },
+    mounted() {},
     methods: {
         createPost(post) {
-            console.log(post);
-            this.posts.push(post);
+            this.posts.unshift(post);
         },
 
         removePost(id) {
             console.log(id);
-            // this.posts.push(id);
         },
     },
 };

@@ -13,7 +13,7 @@
         </div>
         <div class="post__wrap-btn d-flex justify-content-between">
             <button-show />
-            <button-remove />
+            <button-remove @removePost="removePost" :id="post.id" />
         </div>
     </div>
 </template>
@@ -25,7 +25,13 @@ export default {
             type: Object,
             requered: true,
         },
-    }
+    },
+    methods: {
+        removePost(id) {
+            // console.log(id);
+            // this.posts.push(id);
+        },
+    },
 };
 </script>
 
