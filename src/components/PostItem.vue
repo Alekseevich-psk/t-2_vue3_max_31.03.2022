@@ -28,7 +28,7 @@ export default {
     },
     methods: {
         removePost(id) {
-            // console.log(id);
+            console.log(id);
             // this.posts.push(id);
         },
     },

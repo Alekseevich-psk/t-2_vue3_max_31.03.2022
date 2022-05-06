@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: 'button-remove',
+    name: "button-remove",
     props: {
         id: {
             type: Number,
@@ -16,9 +16,13 @@ export default {
     mounted() {
         // console.log(this.id);
     },
+    provide() {
+        return {
+            test: 'test',
+        };
+    },
     methods: {
         removePost() {
-            // console.log(this.id);
             this.$emit("removePost", this.id);
         },
     },
