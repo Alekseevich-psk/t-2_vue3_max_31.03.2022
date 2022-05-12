@@ -32,18 +32,14 @@ export default {
 }
 
 .post__form-error {
-    /* display: none; */
-    opacity: 0;
-    height: 0;
+    display: none;
     padding: 0;
     margin: 0;
-    visibility: hidden;
 }
 
 .warning .post__form-error{
-    opacity: 1;
-    height: 100%;
-    visibility: visible;
+    display: block;
     color: red;
 }
+
 </style>
