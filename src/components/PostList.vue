@@ -3,7 +3,7 @@
         <div class="post__align mb-3 text-end">
             <!-- <button-reverse post="this.posts"/> -->
         </div>
-        <post-item v-for="post in posts" :key="post.id" :post="post" />
+        <post-item v-for="post in posts" :key="post.id" @removePost="removePost" :post="post" />
     </div>
 </template>
 
@@ -27,7 +27,13 @@ export default {
     created: function () {
         this.posts.reverse();
     },
-    methods: {},
+    methods: {
+        removePost(id) {
+            console.log(id);
+            console.log(this.posts);
+            this.posts.slice(id, 1)
+        },
+    },
 };
 </script>
 

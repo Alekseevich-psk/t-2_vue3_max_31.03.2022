@@ -23,7 +23,9 @@ export default {
             body: "",
         };
     },
-    mounted() {},
+    mounted() {
+        // console.log(this.posts);
+    },
     methods: {
         createPost(post) {
             this.posts.unshift(post);

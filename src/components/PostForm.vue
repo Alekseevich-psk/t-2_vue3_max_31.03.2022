@@ -2,16 +2,10 @@
     <div class="post__add mb-3 p-3">
         <form @submit.prevent>
             <p class="b">Добавить пост</p>
-            <div class="post__form-group form-group mb-2">
-                <label for="formGroupExampleInput" class="mb-2">Название</label>
-                <input v-model="post.title" type="text" class="form-control" id="formGroupExampleInput" />
-            </div>
-            <div class="post__form-group form-group mb-2">
-                <label for="formGroupExampleInput2" class="mb-2">Описание</label>
-                <input v-model="post.body" type="text" class="form-control" id="formGroupExampleInput2" />
-            </div>
+            <my-input v-model="post.title" :err="this.err.title" >Название</my-input>
+            <my-input v-model="post.body" :err="this.err.body" >Описание</my-input>
             <div class="post__align pt-4">
-                <button type="button" @click="addPost" class="btn btn-primary">Добавить пост</button>
+                <button-add @click="addPost">Добавить пост</button-add>
             </div>
         </form>
     </div>
@@ -25,7 +19,11 @@ export default {
                 id: "",
                 title: "",
                 body: "",
-                link: ""
+                link: "",
+            },
+            err: {
+                title: false,
+                body: false,
             },
         };
     },
@@ -38,17 +36,23 @@ export default {
     methods: {
         addPost: function () {
             this.post.id = this.postsCount + 1;
-            this.post.link = this.translit(this.post.title);
-            this.$emit("create", this.post);
-            this.post = {
-                title: "",
-                body: "",
-                id: "",
-                link: ""
-            };
+
+            ( this.post.title != "" ) ? this.err.title = false : this.err.title = true;
+            ( this.post.body != "" ) ? this.err.body = false : this.err.body = true;
+
+            if (this.post.title != "" && this.post.body != "") {
+                this.post.link = this.translit(this.post.title);
+                this.$emit("create", this.post);
+                this.post = {
+                    title: "",
+                    body: "",
+                    id: "",
+                    link: "",
+                };
+            }
         },
 
-        translit: word =>  {
+        translit: (word) => {
             var converter = {
                 а: "a",
                 б: "b",
