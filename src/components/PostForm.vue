@@ -1,7 +1,7 @@
 <template>
-    <div class="post__add mb-3 p-3">
+    <div class="post__add p-3">
         <form @submit.prevent>
-            <p class="b">Добавить пост</p>
+            <h4 class="b">Добавить пост</h4>
             <my-input v-model="post.title" :err="this.err.title" >Название</my-input>
             <my-input v-model="post.body" :err="this.err.body" >Описание</my-input>
             <div class="post__align pt-4">

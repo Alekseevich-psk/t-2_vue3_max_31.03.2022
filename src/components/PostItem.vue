@@ -8,7 +8,10 @@
                 Название: <span>{{ post.title }}</span>
             </p>
             <p class="post__desc mb-0">
-                Опсиание: <span>{{ post.body }}</span>
+                Описание: <span>{{ post.body }}</span>
+            </p>
+            <p class="post__desc mb-0 post__desc--link">
+                Адрес: <span>{{ post.link }}</span>
             </p>
         </div>
         <div class="post__wrap-btn d-flex justify-content-between">
@@ -39,5 +42,9 @@ export default {
 .post__add {
     border: 1px solid rgb(209, 209, 209);
     border-radius: 8px;
+}
+
+.post__desc--link {
+    font-size: 13px;
 }
 </style>

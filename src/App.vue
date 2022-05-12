@@ -1,7 +1,9 @@
 <template>
     <div class="post">
-        <post-form @create="createPost" :postsCount="this.posts.length"></post-form>
-        <post-list @removePost="removePost" @reversePost="reversePost" :posts="posts"></post-list>
+        <my-popup v-model:show="popupVisible">
+            <post-form @create="createPost" :postsCount="this.posts.length"></post-form>
+        </my-popup>
+        <post-list @removePost="removePost" @showPopup="showPopup" @reversePost="reversePost" :posts="posts"></post-list>
     </div>
 </template>
 
@@ -22,11 +24,10 @@ export default {
             title: "",
             body: "",
             reverse: false,
+            popupVisible: false,
         };
     },
-    mounted() {
-       
-    },
+    mounted() {},
     methods: {
         createPost(post) {
             if (this.reverse) {
@@ -34,14 +35,20 @@ export default {
             } else {
                 this.posts.unshift(post);
             }
+
+            this.popupVisible = false;
         },
 
         reversePost(val) {
             this.reverse = val;
         },
 
+        showPopup() {
+            this.popupVisible = true;
+        },
+
         removePost(post) {
-            this.posts = this.posts.filter(p => p.id !== post.id);
+            this.posts = this.posts.filter((p) => p.id !== post.id);
         },
     },
 };
