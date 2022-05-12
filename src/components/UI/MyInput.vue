@@ -1,8 +1,8 @@
 <template>
     <div class="post__form-group form-group mb-2" :class="{ warning: err }">
-        <label for="formGroupExampleInput" class="mb-2"><slot /></label>
-        <input :value="modelValue" @input="updateInput" class="form-control" id="formGroupExampleInput" />
-        <p class="post__form-error">*Заполните форму</p>
+        <label for="input" class="mb-2"><slot /></label>
+        <input :value="modelValue" @input="updateInput" class="form-control" id="input" />
+        <p class="post__form-error">*Поле обязательно к заполнению</p>
     </div>
 </template>
 
@@ -40,6 +40,7 @@ export default {
 .warning .post__form-error{
     display: block;
     color: red;
+    font-size: 13px;
 }
 
 </style>

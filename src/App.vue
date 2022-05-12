@@ -1,7 +1,7 @@
 <template>
     <div class="post">
         <post-form @create="createPost" :postsCount="this.posts.length"></post-form>
-        <post-list @removePost="removePost" :posts="posts"></post-list>
+        <post-list @removePost="removePost" @reversePost="reversePost" :posts="posts"></post-list>
     </div>
 </template>
 
@@ -21,18 +21,27 @@ export default {
             ],
             title: "",
             body: "",
+            reverse: false,
         };
     },
     mounted() {
-        // console.log(this.posts);
+       
     },
     methods: {
         createPost(post) {
-            this.posts.unshift(post);
+            if (this.reverse) {
+                this.posts.push(post);
+            } else {
+                this.posts.unshift(post);
+            }
         },
 
-        removePost(id) {
-            console.log(id);
+        reversePost(val) {
+            this.reverse = val;
+        },
+
+        removePost(post) {
+            this.posts = this.posts.filter(p => p.id !== post.id);
         },
     },
 };

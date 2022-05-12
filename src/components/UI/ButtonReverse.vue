@@ -1,23 +1,20 @@
 <template>
-    <button type="button" @click="reversePost" :class="{ 'btn-success': isActive, 'btn-outline-secondary': !isActive }" class="btn">
-        Сортировать
+    <button type="button" @click="active" :class="{ 'btn-success': isActive, 'btn-outline-secondary': !isActive }" class="btn">
+        <slot/>
     </button>
 </template>
 
 <script>
 export default {
-    name: "button-remove",
-    props: {
-        posts: {
-            type: Array,
-            required: true,
-        },
+    name: "button-reverse",
+    data() {
+        return {
+            isActive: false,
+        };
     },
     methods: {
-        reversePost: function () {
-            console.log(this.posts);
-            // this.posts.reverse();
-            // this.isActive = !this.isActive;
+        active() {
+            (this.isActive) ? this.isActive = false : this.isActive = true;
         },
     },
 };

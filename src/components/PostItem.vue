@@ -28,8 +28,7 @@ export default {
     },
     methods: {
         removePost() {
-            console.log(this.key);
-            this.$emit("removePost", this.post.id);
+            this.$emit("removePost");
         },
     },
 };

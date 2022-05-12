@@ -1,9 +1,12 @@
 <template>
-    <div>
+    <div v-if="posts.length > 0">
         <div class="post__align mb-3 text-end">
-            <!-- <button-reverse post="this.posts"/> -->
+            <button-reverse @click="postReverseSort">Показать начало списка</button-reverse>
         </div>
-        <post-item v-for="post in posts" :key="post.id" @removePost="removePost" :post="post" />
+        <post-item v-for="post in posts" :key="post.id" :post="post" @removePost="removePost(post)" />
+    </div>
+    <div v-else>
+        <h3>Список постов пуст</h3>
     </div>
 </template>
 
@@ -16,6 +19,7 @@ export default {
     data() {
         return {
             isActive: false,
+            reversePost: false,
         };
     },
     props: {
@@ -28,10 +32,14 @@ export default {
         this.posts.reverse();
     },
     methods: {
-        removePost(id) {
-            console.log(id);
-            console.log(this.posts);
-            this.posts.slice(id, 1)
+        removePost(post) {
+            this.$emit("removePost", post);
+        },
+
+        postReverseSort() {
+            this.reversePost ? (this.reversePost = false) : (this.reversePost = true);
+            this.$emit("reversePost", this.reversePost);
+            this.posts.reverse();
         },
     },
 };
