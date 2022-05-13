@@ -11,23 +11,22 @@
 import PostList from "@/components/PostList.vue";
 import PostForm from "@/components/PostForm.vue";
 import PostItem from "@/components/PostItem.vue";
+import axios from "axios";
 
 export default {
     components: { PostList, PostForm, PostItem },
     data() {
         return {
-            posts: [
-                { id: 1, title: "javaScript", body: "Описание поста", link: "/post-1" },
-                { id: 2, title: "PHP", body: "Описание поста", link: "/post-2" },
-                { id: 3, title: "HTML", body: "Описание поста", link: "/post-3" },
-            ],
+            posts: [],
             title: "",
             body: "",
             reverse: false,
             popupVisible: false,
         };
     },
-    mounted() {},
+    mounted() {
+        this.fetchPost();
+    },
     methods: {
         createPost(post) {
             if (this.reverse) {
@@ -50,6 +49,19 @@ export default {
         removePost(post) {
             this.posts = this.posts.filter((p) => p.id !== post.id);
         },
+
+        async fetchPost() {
+            try {
+                const response = await axios.get("https://jsonplaceholder.typicode.com/posts?_limit=5");
+                // response.data.forEach((element) => {
+                //     this.posts.push(element);
+                // });
+                this.posts = response.data;
+            } catch (e) {
+                alert("error");
+            }
+        },
+
     },
 };
 </script>
