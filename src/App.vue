@@ -5,7 +5,7 @@
         </my-popup>
         <div class="post__align mb-3 d-flex justify-content-between">
             <button-add @click="showPopup">Добавить пост</button-add>
-            <my-select v-model="selectedSort" :options="sortOptions"></my-select>
+            <my-select v-if="posts.length > 0" v-model="selectedSort" :options="sortOptions"></my-select>
         </div>
         <post-list @removePost="removePost"
                    :posts="posts"></post-list>
@@ -32,6 +32,10 @@
                 selectedSort: '',
                 sortOptions: [
                     {
+                        value: 'id',
+                        name: 'По id'
+                    },
+                    {
                         value: 'title',
                         name: 'По названию'
                     },
@@ -44,6 +48,20 @@
         },
         mounted() {
             this.fetchPost();
+        },
+        watch: {
+            selectedSort(newValue) {
+
+                if(newValue === 'id') {
+                    this.posts.sort((p1, p2) => {
+                        return p1[newValue] - p2[newValue];
+                    });
+                } else {
+                    this.posts.sort((p1, p2) => {
+                        return p1[newValue].localeCompare(p2[newValue])
+                    })
+                }
+            }
         },
         methods: {
             createPost(post) {
@@ -74,7 +92,7 @@
                         const response = await axios.get("https://jsonplaceholder.typicode.com/posts?_limit=5");
                         this.posts = response.data;
                         this.preloader = false;
-                    }, 1000);
+                    }, 100);
                 } catch (e) {
                     alert("error");
                 }

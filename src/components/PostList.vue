@@ -1,7 +1,9 @@
 <template>
     <div>
         <div v-if="posts.length > 0">
-            <post-item v-for="post in posts" :key="post.id" :post="post" @removePost="removePost(post)"/>
+            <transition-group name="post">
+                <post-item v-for="post in posts" :key="post.id" :post="post" @removePost="removePost(post)"/>
+            </transition-group>
         </div>
         <div v-else>
             <h3>Список постов пуст</h3>
@@ -53,5 +55,23 @@
 <style scoped>
     .post span {
         font-weight: 500;
+    }
+
+    .post-item {
+        display: inline-block;
+        margin-right: 10px;
+    }
+    .post-enter-active,
+    .post-leave-active {
+        transition: all 1s ease;
+    }
+    .post-enter-from,
+    .post-leave-to {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    .flip-post-move {
+        transition: transform 0.8s ease;
     }
 </style>
