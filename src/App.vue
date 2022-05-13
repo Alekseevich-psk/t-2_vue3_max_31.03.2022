@@ -5,7 +5,7 @@
         </my-popup>
         <post-list @removePost="removePost" @showPopup="showPopup" @reversePost="reversePost"
                    :posts="posts"></post-list>
-        <my-preloader v-model:show="preloader"></my-preloader>
+        <my-preloader v-if="preloader"></my-preloader>
     </div>
 </template>
 
