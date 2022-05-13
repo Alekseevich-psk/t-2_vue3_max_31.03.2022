@@ -5,6 +5,7 @@ import ButtonAdd from "@/components/UI/ButtonAdd";
 import MyInput from "@/components/UI/MyInput";
 import MyPopup from "@/components/UI/MyPopup";
 import MyPreloader from "@/components/UI/MyPreloader";
+import MySelect from "@/components/UI/MySelect";
 
 export default [
     ButtonRemove,
@@ -14,4 +15,5 @@ export default [
     MyInput,
     MyPopup,
     MyPreloader,
+    MySelect,
 ]

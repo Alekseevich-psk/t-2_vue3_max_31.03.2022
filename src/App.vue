@@ -3,7 +3,11 @@
         <my-popup v-model:show="popupVisible">
             <post-form @create="createPost" :postsCount="this.posts.length"></post-form>
         </my-popup>
-        <post-list @removePost="removePost" @showPopup="showPopup" @reversePost="reversePost"
+        <div class="post__align mb-3 d-flex justify-content-between">
+            <button-add @click="showPopup">Добавить пост</button-add>
+            <my-select v-model="selectedSort" :options="sortOptions"></my-select>
+        </div>
+        <post-list @removePost="removePost"
                    :posts="posts"></post-list>
         <my-preloader v-if="preloader"></my-preloader>
     </div>
@@ -14,10 +18,9 @@
     import PostForm from "@/components/PostForm.vue";
     import PostItem from "@/components/PostItem.vue";
     import axios from "axios";
-    import MyPreloader from "@/components/UI/MyPreloader";
 
     export default {
-        components: {MyPreloader, PostList, PostForm, PostItem},
+        components: {PostList, PostForm, PostItem},
         data() {
             return {
                 posts: [],
@@ -26,6 +29,17 @@
                 reverse: false,
                 popupVisible: false,
                 preloader: true,
+                selectedSort: '',
+                sortOptions: [
+                    {
+                        value: 'title',
+                        name: 'По названию'
+                    },
+                    {
+                        value: 'body',
+                        name: 'По содержимому'
+                    }
+                ]
             };
         },
         mounted() {
