@@ -10,6 +10,7 @@
         <input-search v-if="posts.length > 0" v-model="queryEnter" placeholder="Поиск.."></input-search>
         <post-list @removePost="removePost" :posts="sortedAndSearchesPosts"></post-list>
         <my-preloader v-if="preloader"></my-preloader>
+        <my-pagination :totalPages="this.totalPages" @selectPage="changePage" />
     </div>
 </template>
 
@@ -31,6 +32,9 @@ export default {
             preloader: true,
             selectedSort: "",
             queryEnter: "",
+            page: 1,
+            limit: 10,
+            totalPages: 0,
             sortOptions: [
                 {
                     value: "id",
@@ -57,8 +61,8 @@ export default {
         },
 
         sortedAndSearchesPosts() {
-            return this.sortedPost.filter(post => post.title.includes(this.queryEnter))
-        }
+            return this.sortedPost.filter((post) => post.title.toLowerCase().includes(this.queryEnter.toLowerCase()));
+        },
     },
     methods: {
         createPost(post) {
@@ -83,10 +87,22 @@ export default {
             this.posts = this.posts.filter((p) => p.id !== post.id);
         },
 
+        changePage(count) {
+            this.page = count;
+            console.log(this.page);
+            this.fetchPost();
+        },
+
         async fetchPost() {
             try {
                 setTimeout(async () => {
-                    const response = await axios.get("https://jsonplaceholder.typicode.com/posts?_limit=5");
+                    const response = await axios.get("https://jsonplaceholder.typicode.com/posts", {
+                        params: {
+                            _page: this.page,
+                            _limit: this.limit,
+                        },
+                    });
+                    this.totalPages = Math.ceil(response.headers["x-total-count"] / this.limit);
                     this.posts = response.data;
                     this.preloader = false;
                 }, 100);

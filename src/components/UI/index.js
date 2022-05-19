@@ -7,6 +7,7 @@ import MyPopup from "@/components/UI/MyPopup";
 import MyPreloader from "@/components/UI/MyPreloader";
 import MySelect from "@/components/UI/MySelect";
 import InputSearch from "@/components/UI/InputSearch";
+import MyPagination from "@/components/UI/MyPagination.vue";
 
 export default [
     ButtonRemove,
@@ -18,4 +19,5 @@ export default [
     MyPreloader,
     MySelect,
     InputSearch,
+    MyPagination,
 ]
