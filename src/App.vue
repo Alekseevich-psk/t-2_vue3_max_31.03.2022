@@ -1,5 +1,5 @@
 <template>
-    <div class="post">
+    <div class="post mb-4">
         <my-popup v-model:show="popupVisible">
             <post-form @create="createPost" :postsCount="this.posts.length"></post-form>
         </my-popup>
@@ -9,8 +9,9 @@
         </div>
         <input-search v-if="posts.length > 0" v-model="queryEnter" placeholder="Поиск.."></input-search>
         <post-list @removePost="removePost" :posts="sortedAndSearchesPosts"></post-list>
+        <div ref="observer" class="post__scroll"></div>
         <my-preloader v-if="preloader"></my-preloader>
-        <my-pagination :totalPages="this.totalPages" @selectPage="changePage" />
+        <!-- <my-pagination :totalPages="this.totalPages" @selectPage="changePage" /> -->
     </div>
 </template>
 
@@ -32,7 +33,7 @@ export default {
             preloader: true,
             selectedSort: "",
             queryEnter: "",
-            page: 1,
+            page: 0,
             limit: 10,
             totalPages: 0,
             sortOptions: [
@@ -52,9 +53,27 @@ export default {
         };
     },
     mounted() {
-        this.fetchPost();
+        // this.loadMorePosts();
+
+        new IntersectionObserver(
+            (entry, observer) => {
+                if (entry[0].isIntersecting) {
+                    this.preloader = true;
+                    this.loadMorePosts();
+                    this.page += 1;
+                }
+            },
+            {
+                thresholds: 0.5,
+                rootMargin: "0px",
+            }
+        ).observe(this.$refs.observer);
     },
-    watch: {},
+    watch: {
+        // page() {
+        //     this.loadMorePosts();
+        // },
+    },
     computed: {
         sortedPost() {
             return [...this.posts].sort((p1, p2) => p1[this.selectedSort]?.localeCompare(p2[this.selectedSort]));
@@ -89,11 +108,9 @@ export default {
 
         changePage(count) {
             this.page = count;
-            console.log(this.page);
-            this.fetchPost();
         },
 
-        async fetchPost() {
+        async loadMorePosts() {
             try {
                 setTimeout(async () => {
                     const response = await axios.get("https://jsonplaceholder.typicode.com/posts", {
@@ -103,9 +120,10 @@ export default {
                         },
                     });
                     this.totalPages = Math.ceil(response.headers["x-total-count"] / this.limit);
-                    this.posts = response.data;
+                    // this.posts = response.data;
+                    this.posts = [...this.posts, ...response.data];
                     this.preloader = false;
-                }, 100);
+                }, 500);
             } catch (e) {
                 alert("error");
             }
@@ -114,4 +132,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.post__scroll {
+    height: 10px;
+    width: 100%;
+}
+</style>
